@@ -5,6 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p>dddd</p>
+    <p>index page</p>
 </body>
 </html>

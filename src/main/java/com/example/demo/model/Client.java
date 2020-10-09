@@ -1,5 +1,10 @@
 package com.example.demo.model;
 
+import java.util.Set;
+import javax.persistence.*;
+
+@Entity
+@Table(name="client")
 public class Client {
 
   private Long idClient;
@@ -7,40 +12,24 @@ public class Client {
   private String motPasseClient;
   private String nomClient;
   private String prenomClient;
-  private String civiliteClient;
-  private String dateNaissanceClient;
-  private String numeroAdrClient;
-  private String rueAdrClient;
-  private String communeAdrClient;
-  private String villeAdrClient;
-  private String cpAdrClient;
-  private String telClient;
-  private String faxClient;
-  private String gsmClient;
-  private String emailClient;
+  private Set<Commande> commandes;
 
   public Client() {
 
   }
 
-  public Client(String loginClient, String motPasseClient, String nomClient, String prenomClient, String civiliteClient, String dateNaissanceClient, String numeroAdrClient, String rueAdrClient, String communeAdrClient, String villeAdrClient, String cpAdrClient, String telClient, String faxClient, String gsmClient, String emailClient) {
+  public Client(Long idClient, String loginClient, String motPasseClient, String nomClient, String prenomClient, Set<Commande> commandes) {
+    this.idClient = idClient;
     this.loginClient = loginClient;
     this.motPasseClient = motPasseClient;
     this.nomClient = nomClient;
     this.prenomClient = prenomClient;
-    this.civiliteClient = civiliteClient;
-    this.dateNaissanceClient = dateNaissanceClient;
-    this.numeroAdrClient = numeroAdrClient;
-    this.rueAdrClient = rueAdrClient;
-    this.communeAdrClient = communeAdrClient;
-    this.villeAdrClient = villeAdrClient;
-    this.cpAdrClient = cpAdrClient;
-    this.telClient = telClient;
-    this.faxClient = faxClient;
-    this.gsmClient = gsmClient;
-    this.emailClient = emailClient;
+    this.commandes = commandes;
   }
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLIENT_gen_seq")
+  @SequenceGenerator(name="CLIENT_gen_seq", sequenceName="CLIENT_SEQ", allocationSize=1)
   public Long getIdClient() {
     return this.idClient;
   }
@@ -49,6 +38,7 @@ public class Client {
     this.idClient = idClient;
   }
 
+  @Column(name = "LOGIN_CLIENT", length = 20)
   public String getLoginClient() {
     return this.loginClient;
   }
@@ -57,6 +47,7 @@ public class Client {
     this.loginClient = loginClient;
   }
 
+  @Column(name = "MOT_PASSE_CLIENT", length = 20)
   public String getMotPasseClient() {
     return this.motPasseClient;
   }
@@ -65,6 +56,7 @@ public class Client {
     this.motPasseClient = motPasseClient;
   }
 
+  @Column(name = "NOM_CLIENT", length = 20)
   public String getNomClient() {
     return this.nomClient;
   }
@@ -77,95 +69,18 @@ public class Client {
     return this.prenomClient;
   }
 
+  @Column(name = "PRENOM_CLIENT", length = 20)
   public void setPrenomClient(String prenomClient) {
     this.prenomClient = prenomClient;
   }
 
-  public String getCiviliteClient() {
-    return this.civiliteClient;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+  public Set<Commande> getCommandes() {
+    return this.commandes;
   }
 
-  public void setCiviliteClient(String civiliteClient) {
-    this.civiliteClient = civiliteClient;
+  public void setCommandes(Set<Commande> commandes) {
+    this.commandes = commandes;
   }
-
-  public String getDateNaissanceClient() {
-    return this.dateNaissanceClient;
-  }
-
-  public void setDateNaissanceClient(String dateNaissanceClient) {
-    this.dateNaissanceClient = dateNaissanceClient;
-  }
-
-  public String getNumeroAdrClient() {
-    return this.numeroAdrClient;
-  }
-
-  public void setNumeroAdrClient(String numeroAdrClient) {
-    this.numeroAdrClient = numeroAdrClient;
-  }
-
-  public String getRueAdrClient() {
-    return this.rueAdrClient;
-  }
-
-  public void setRueAdrClient(String rueAdrClient) {
-    this.rueAdrClient = rueAdrClient;
-  }
-
-  public String getCommuneAdrClient() {
-    return this.communeAdrClient;
-  }
-
-  public void setCommuneAdrClient(String communeAdrClient) {
-    this.communeAdrClient = communeAdrClient;
-  }
-
-  public String getVilleAdrClient() {
-    return this.villeAdrClient;
-  }
-
-  public void setVilleAdrClient(String villeAdrClient) {
-    this.villeAdrClient = villeAdrClient;
-  }
-
-  public String getCpAdrClient() {
-    return this.cpAdrClient;
-  }
-
-  public void setCpAdrClient(String cpAdrClient) {
-    this.cpAdrClient = cpAdrClient;
-  }
-
-  public String getTelClient() {
-    return this.telClient;
-  }
-
-  public void setTelClient(String telClient) {
-    this.telClient = telClient;
-  }
-
-  public String getFaxClient() {
-    return this.faxClient;
-  }
-
-  public void setFaxClient(String faxClient) {
-    this.faxClient = faxClient;
-  }
-
-  public String getGsmClient() {
-    return this.gsmClient;
-  }
-
-  public void setGsmClient(String gsmClient) {
-    this.gsmClient = gsmClient;
-  }
-
-  public String getEmailClient() {
-    return this.emailClient;
-  }
-
-  public void setEmailClient(String emailClient) {
-    this.emailClient = emailClient;
-  }
+ 
 }
